@@ -9,16 +9,17 @@ export default class UserCrudImpl implements UserCrud {
       this.userGateway = userGateway; 
     }
 
-    create(user: User, callback: Function): User {
+    async create(user: User): Promise<User> {
         if(user.gender === "M") {
             user.avatar_url = "https://cdn.vectorstock.com/i/1000x1000/77/30/default-avatar-profile-icon-grey-photo-placeholder-vector-17317730.webp"
         } else {
             user.avatar_url = "https://cdn.vectorstock.com/i/1000x1000/45/94/default-avatar-profile-icon-grey-photo-vector-31934594.webp"
         }
-        return this.userGateway.create(user, callback);
+        const userCreated = await this.userGateway.create(user);
+        return userCreated;
     }
 
-    findAll(callback: Function): User[] {
-        return this.userGateway.findAll(callback);
+    async findAll(): Promise<User[]> {
+        return await this.userGateway.findAll();
     }
 }
